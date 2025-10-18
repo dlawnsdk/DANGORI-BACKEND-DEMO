@@ -10,14 +10,14 @@ public class ResultModel<T> {
     private final String message;
     private final Boolean resultFlag;
     private final Integer statusCode;
-    private final T response;
+    private final T data;
 
     public static <T> ResultModel<T> success(T data) {
         return ResultModel.<T>builder()
                 .message(ResponseMessage.SUCCESS.message())
                 .resultFlag(true)
                 .statusCode(ResponseMessage.SUCCESS.httpStatus().value())
-                .response(data)
+                .data(data)
                 .build();
     }
 
@@ -25,7 +25,7 @@ public class ResultModel<T> {
         return ResultModel.<T>builder()
                 .statusCode(responseMessage.httpStatus().value())
                 .message(responseMessage.message())
-                .response(null)
+                .data(null)
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class ResultModel<T> {
                 .message(ResponseMessage.SUCCESS.message())
                 .resultFlag(true)
                 .statusCode(ResponseMessage.SUCCESS.httpStatus().value())
-                .response(null)
+                .data(null)
                 .build();
     }
 
