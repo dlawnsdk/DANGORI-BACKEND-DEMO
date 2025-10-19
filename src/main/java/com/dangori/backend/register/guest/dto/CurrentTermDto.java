@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 
 public record CurrentTermDto(
         Long termsSeq,
-        int codeSeq,
+        Long codeSeq,
         String displayName,
         Long versionSeq,
         String version,
         boolean required,
         String locale,
         LocalDateTime effectiveAt,
-        String contentUrl,
+        String content,
         String checksum
 ) {
     // === Entity -> DTO 변환 ===

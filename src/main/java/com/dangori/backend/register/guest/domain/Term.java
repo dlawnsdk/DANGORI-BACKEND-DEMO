@@ -17,7 +17,7 @@ public class Term extends BaseEntity {
 
     @Comment("'TOS', 'PRIVACY', 'LOCATION', 'MARKETING'")
     @Column(name = "code_seq")
-    private int codeSeq;
+    private Long codeSeq;
 
     @Column(name = "display_name")
     private String displayName;
