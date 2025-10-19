@@ -1,7 +1,7 @@
 package com.dangori.backend.register.guest.presentation;
 
 import com.dangori.backend.common.dto.ResultModel;
-import com.dangori.backend.register.guest.dto.CurrentTermDto;
+import com.dangori.backend.register.guest.dto.CurrentTermResponse;
 import com.dangori.backend.register.guest.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @GetMapping("/register-term")
-    public ResultModel<List<CurrentTermDto>> getTermList() {
+    public ResultModel<List<CurrentTermResponse>> getTermList() {
 
         return ResultModel.success(registerService.getCurrentTerms());
     }

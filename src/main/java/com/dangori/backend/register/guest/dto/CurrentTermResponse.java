@@ -4,7 +4,7 @@ import com.dangori.backend.register.guest.domain.TermVersion;
 
 import java.time.LocalDateTime;
 
-public record CurrentTermDto(
+public record CurrentTermResponse(
         Long termsSeq,
         Long codeSeq,
         String displayName,
@@ -17,11 +17,11 @@ public record CurrentTermDto(
         String checksum
 ) {
     // === Entity -> DTO 변환 ===
-    public static CurrentTermDto fromEntity(TermVersion tv) {
+    public static CurrentTermResponse fromEntity(TermVersion tv) {
         if (tv == null || tv.getTerm() == null) {
             throw new IllegalArgumentException("Invalid TermVersion: null term");
         }
-        return new CurrentTermDto(
+        return new CurrentTermResponse(
                 tv.getTerm().getSeq(),
                 tv.getTerm().getCodeSeq(),
                 tv.getTerm().getDisplayName(),
