@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     Optional<UserInfo> findByUserEmail(String email);
-    List<UserInfo> findAllBySeqIn(Collection<Long> seq);
-    List<UserInfo> findBySeqInAndWithdrawFlag(List<Long> seqList, YnType ynType);
 }
