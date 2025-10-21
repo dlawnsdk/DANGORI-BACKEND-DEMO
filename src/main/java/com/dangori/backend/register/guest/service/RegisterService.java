@@ -25,11 +25,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dangori.backend.register.exception.RegisterExceptionType.DUPLICATE_EMAIL;
-
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class RegisterService {
 
     private final UserInfoRepository userInfoRepository;
