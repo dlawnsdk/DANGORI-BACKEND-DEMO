@@ -27,8 +27,8 @@ public class UserInfoResponse {
 
         return UserInfoResponse.builder()
                 .email(userInfo.getUserEmail())
-                .gender(userInfo.getDetail().getGender())
-                .nickname(userInfo.getDetail().getNickname())
+                .gender(userInfo.getDetail().getUserGender())
+                .nickname(userInfo.getDetail().getUserName())
                 .profileImagePath(userInfo.getDetail().getProfileImage())
                 .build();
     }

@@ -5,7 +5,7 @@ import com.dangori.backend.register.guest.domain.TermVersion;
 import java.time.LocalDateTime;
 
 public record CurrentTermResponse(
-        Long termsSeq,
+        Long termSeq,
         Long codeSeq,
         String displayName,
         Long versionSeq,

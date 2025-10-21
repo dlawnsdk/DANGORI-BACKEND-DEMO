@@ -20,15 +20,12 @@ public record GoogleMemberResponse(
 
         UserDetailInfo userDetailInfo = UserDetailInfo.builder()
                 .profileImage(picture)
-                .nickname(UUIDGenerator.generate(givenName))
+                .userName(UUIDGenerator.generate(givenName))
                 .build();
 
         return UserInfo.builder()
                 .userEmail(email)
                 .registerCode(joinTypeCode)
-                .detail(userDetailInfo)
-                .banFlag(YnType.N)
-                .withdrawFlag(YnType.N)
                 .build();
     }
 }

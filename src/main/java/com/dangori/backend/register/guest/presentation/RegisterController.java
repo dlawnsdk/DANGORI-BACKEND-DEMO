@@ -1,10 +1,14 @@
 package com.dangori.backend.register.guest.presentation;
 
-import com.dangori.backend.common.dto.ResultModel;
+import com.dangori.backend.common.dto.ResultResponse;
+import com.dangori.backend.register.exception.RegisterExceptionType;
 import com.dangori.backend.register.guest.dto.CurrentTermResponse;
+import com.dangori.backend.register.guest.dto.GuestRegisterRequest;
 import com.dangori.backend.register.guest.service.RegisterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,14 +20,34 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @GetMapping("/register-term")
-    public ResultModel<List<CurrentTermResponse>> getTermList() {
+    public ResultResponse<List<CurrentTermResponse>> getTermList() {
 
-        return ResultModel.success(registerService.getCurrentTerms());
+        return ResultResponse.success(registerService.getCurrentTerms());
     }
 
-    @PostMapping("/register-check-email")
-    public ResultModel<Boolean> checkEmail(@RequestBody String userEmail) {
+    @GetMapping("/register-check-email")
+    public ResultResponse<Boolean> checkEmail(@RequestParam String userEmail) {
 
-        return ResultModel.success(registerService.checkEmail(userEmail));
+        boolean result =  registerService.checkEmail(userEmail);
+
+        if(result) {
+            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_EMAIL, false);
+        }
+
+        return ResultResponse.success(false);
+    }
+
+    @PostMapping(value = "/register-account", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResultResponse<Boolean> registerAccount(
+            @RequestPart("payload") GuestRegisterRequest guestRegisterRequest,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage
+    ) {
+
+        boolean result = registerService.registerAccount(guestRegisterRequest, profileImage);
+        if(!result) {
+            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_EMAIL, false);
+        }
+
+        return ResultResponse.success(true);
     }
 }

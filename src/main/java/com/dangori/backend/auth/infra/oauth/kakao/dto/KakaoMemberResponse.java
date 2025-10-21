@@ -19,15 +19,12 @@ public record KakaoMemberResponse(
 
     public UserInfo toDomain(Long joinTypeCode) {
         UserDetailInfo userDetailInfo = UserDetailInfo.builder()
-                .nickname(UUIDGenerator.generate(kakaoAccount.profile.nickname))
+                .userName(UUIDGenerator.generate(kakaoAccount.profile.nickname))
                 .build();
 
         return UserInfo.builder()
                 .userEmail(kakaoAccount.email)
                 .registerCode(joinTypeCode)
-                .detail(userDetailInfo)
-                .banFlag(YnType.N)
-                .withdrawFlag(YnType.N)
                 .build();
     }
 

@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "term")
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 public class Term extends BaseEntity {
 
     @Comment("'TOS', 'PRIVACY', 'LOCATION', 'MARKETING'")
@@ -24,9 +23,4 @@ public class Term extends BaseEntity {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @PrePersist
-    void onCreate() {
-        if (createdAt == null) createdAt = LocalDateTime.now();
-    }
 }

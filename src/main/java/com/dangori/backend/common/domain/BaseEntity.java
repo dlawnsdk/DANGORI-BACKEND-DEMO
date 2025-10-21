@@ -19,13 +19,4 @@ public class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    public Long seq() {
-        return seq;
-    }
-
-    @Column(name = "created_at", insertable = false, updatable = false)
-    public LocalDateTime createdDate() {
-        return createdAt;
-    }
 }

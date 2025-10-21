@@ -8,10 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "term_version")
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 public class TermVersion extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -44,9 +43,4 @@ public class TermVersion extends BaseEntity {
 
     @Column(name = "retired_at")
     private LocalDateTime retiredAt;
-
-    @PrePersist
-    void onCreate() {
-        if (createdAt == null) createdAt = LocalDateTime.now();
-    }
 }

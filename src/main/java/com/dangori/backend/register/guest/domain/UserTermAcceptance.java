@@ -1,24 +1,24 @@
 package com.dangori.backend.register.guest.domain;
 
 import com.dangori.backend.common.domain.BaseEntity;
+import com.dangori.backend.user.domain.UserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_term_acceptance")
-@Getter @Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 public class UserTermAcceptance extends BaseEntity {
 
-    @Column(name = "user_seq")
-    private Long userSeq;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
+    private UserInfo user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "term_version_seq")
-    private TermVersion termVersion;
+    @Column(name = "term_version_seq")
+    private Long termVersionSeq;
 
     @Column(name = "agreed_at")
     private LocalDateTime agreedAt;
@@ -29,14 +29,6 @@ public class UserTermAcceptance extends BaseEntity {
     @Column(name = "user_agent")
     private String userAgent;
 
-    @Column(name = "source")
-    private String source;
-
     @Column(name = "withdrawn_at")
     private LocalDateTime withdrawnAt;
-
-    @PrePersist
-    void onCreate() {
-        if (agreedAt == null) agreedAt = LocalDateTime.now();
-    }
 }
