@@ -60,11 +60,26 @@ public class RegisterService {
         return userInfo.isPresent();
     }
 
+    /**
+     * 이메일 중복체크
+     * true: 사용 불가능한 휴대폰 번호
+     * false: 사용 가능한 휴대폰 번호
+     */
+    public boolean checkNumber(String userNumber) {
+        Optional<UserDetailInfo> userDetailInfo = userDetailInfoRepository.findByUserNumber(userNumber);
+        return userDetailInfo.isPresent();
+    }
+
     @Transactional
     public boolean registerAccount(GuestRegisterRequest guestRegisterRequest, MultipartFile profileImage) {
 
-        // 회원 검증
+        // 회원 이메일 검증
         if (checkEmail(guestRegisterRequest.userEmail())) {
+            return false;
+        }
+
+        // 회원 휴대폰 번호 검증
+        if (checkNumber(guestRegisterRequest.userEmail())) {
             return false;
         }
 

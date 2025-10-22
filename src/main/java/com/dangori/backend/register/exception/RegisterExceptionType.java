@@ -8,7 +8,9 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 public enum RegisterExceptionType implements BaseExceptionType {
 
-    DUPLICATE_EMAIL(ALREADY_REPORTED, "이미 존재하는 이메일 입니다.");
+    DUPLICATE_ACCOUNT(ALREADY_REPORTED, "이미 가입된 정보입니다. 다시 시도해주세요"),
+    DUPLICATE_EMAIL(ALREADY_REPORTED, "이미 가입된 이메일입니다."),
+    DUPLICATE_NUMBER(ALREADY_REPORTED, "이미 가입한 전화번호입니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

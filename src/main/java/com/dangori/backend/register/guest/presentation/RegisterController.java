@@ -31,7 +31,19 @@ public class RegisterController {
         boolean result =  registerService.checkEmail(userEmail);
 
         if(result) {
-            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_EMAIL, false);
+            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_EMAIL, true);
+        }
+
+        return ResultResponse.success(false);
+    }
+
+    @GetMapping("/register-check-number")
+    public ResultResponse<Boolean> checkNumber(@RequestParam String userNumber) {
+
+        boolean result =  registerService.checkNumber(userNumber);
+
+        if(result) {
+            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_NUMBER, true);
         }
 
         return ResultResponse.success(false);
@@ -45,7 +57,7 @@ public class RegisterController {
 
         boolean result = registerService.registerAccount(guestRegisterRequest, profileImage);
         if(!result) {
-            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_EMAIL, false);
+            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_ACCOUNT, false);
         }
 
         return ResultResponse.success(true);
