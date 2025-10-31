@@ -1,15 +1,12 @@
 package com.dangori.backend.register.guest.service;
 
-import com.dangori.backend.common.dto.ResultResponse;
-import com.dangori.backend.common.enums.ResponseMessage;
-import com.dangori.backend.register.exception.RegisterException;
-import com.dangori.backend.register.exception.RegisterExceptionType;
 import com.dangori.backend.register.guest.domain.TermVersion;
 import com.dangori.backend.register.guest.domain.UserTermAcceptance;
 import com.dangori.backend.register.guest.domain.repository.TermVersionRepository;
 import com.dangori.backend.register.guest.domain.repository.UserTermAcceptanceRepository;
 import com.dangori.backend.register.guest.dto.CurrentTermResponse;
 import com.dangori.backend.register.guest.dto.GuestRegisterRequest;
+import com.dangori.backend.register.guest.exception.RegisterException;
 import com.dangori.backend.user.domain.UserDetailInfo;
 import com.dangori.backend.user.domain.UserInfo;
 import com.dangori.backend.user.domain.repository.UserDetailInfoRepository;
@@ -24,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static com.dangori.backend.register.guest.exception.RegisterExceptionType.DUPLICATE_EMAIL;
+import static com.dangori.backend.register.guest.exception.RegisterExceptionType.DUPLICATE_NUMBER;
 
 @Service
 @RequiredArgsConstructor
@@ -71,22 +71,22 @@ public class RegisterService {
     }
 
     @Transactional
-    public boolean registerAccount(GuestRegisterRequest guestRegisterRequest, MultipartFile profileImage) {
+    public void registerAccount(GuestRegisterRequest guestRegisterRequest, MultipartFile profileImage) {
 
         // 회원 이메일 검증
         if (checkEmail(guestRegisterRequest.userEmail())) {
-            return false;
+            throw new RegisterException(DUPLICATE_EMAIL);
         }
 
         // 회원 휴대폰 번호 검증
         if (checkNumber(guestRegisterRequest.userEmail())) {
-            return false;
+            throw new RegisterException(DUPLICATE_NUMBER);
         }
 
         // 회원 정보 저장
         UserInfo userInfo = saveUserInfo(guestRegisterRequest.userEmail(), guestRegisterRequest.userPassword(), 7L);
 
-        // 회원 상세정보 저장
+        // 회원 상세 정보 저장
         UserDetailInfo userDetailInfo = saveUserDetailInfo(
                 userInfo,
                 guestRegisterRequest.userName(),
@@ -105,8 +105,6 @@ public class RegisterService {
 //            saveProfileImage(profileImage); // storage 추가
             userDetailInfo.setProfileImage(profileImage.getOriginalFilename());
         }
-
-        return true;
     }
 
     private UserInfo saveUserInfo(String userEmail, String userPassword, Long registerCode) {

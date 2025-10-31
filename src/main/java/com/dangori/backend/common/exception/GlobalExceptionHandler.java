@@ -1,6 +1,7 @@
 package com.dangori.backend.common.exception;
 
 import com.dangori.backend.auth.exception.AuthException;
+import com.dangori.backend.common.dto.ResultResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,5 +18,14 @@ public class GlobalExceptionHandler {
                 .body(Map.of("message", ex.getMessage()));
     }
 
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ResultResponse<Void>> handleBaseException(BaseException e) {
+        BaseExceptionType type = e.exceptionType();
 
+        ResultResponse<Void> body = ResultResponse.fail(type, null);
+
+        return ResponseEntity
+                .status(type.httpStatus())
+                .body(body);
+    }
 }

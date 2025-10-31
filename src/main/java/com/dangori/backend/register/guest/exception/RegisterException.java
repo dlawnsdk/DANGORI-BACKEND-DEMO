@@ -1,4 +1,4 @@
-package com.dangori.backend.register.exception;
+package com.dangori.backend.register.guest.exception;
 
 
 import com.dangori.backend.common.exception.BaseException;

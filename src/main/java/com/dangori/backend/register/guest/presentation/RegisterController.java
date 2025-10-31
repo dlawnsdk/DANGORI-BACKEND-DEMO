@@ -1,9 +1,9 @@
 package com.dangori.backend.register.guest.presentation;
 
 import com.dangori.backend.common.dto.ResultResponse;
-import com.dangori.backend.register.exception.RegisterExceptionType;
 import com.dangori.backend.register.guest.dto.CurrentTermResponse;
 import com.dangori.backend.register.guest.dto.GuestRegisterRequest;
+import com.dangori.backend.register.guest.exception.RegisterExceptionType;
 import com.dangori.backend.register.guest.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -55,10 +55,10 @@ public class RegisterController {
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage
     ) {
 
-        boolean result = registerService.registerAccount(guestRegisterRequest, profileImage);
-        if(!result) {
-            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_ACCOUNT, false);
-        }
+        registerService.registerAccount(guestRegisterRequest, profileImage);
+//        if(!result) {
+//            return ResultResponse.fail(RegisterExceptionType.DUPLICATE_ACCOUNT, false);
+//        }
 
         return ResultResponse.success(true);
     }
