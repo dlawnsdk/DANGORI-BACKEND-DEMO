@@ -19,10 +19,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<ResultResponse<Void>> handleBaseException(BaseException e) {
+    public ResponseEntity<ResultResponse<Boolean>> handleBaseException(BaseException e) {
         BaseExceptionType type = e.exceptionType();
 
-        ResultResponse<Void> body = ResultResponse.fail(type, null);
+        ResultResponse<Boolean> body = ResultResponse.fail(type, false);
 
         return ResponseEntity
                 .status(type.httpStatus())

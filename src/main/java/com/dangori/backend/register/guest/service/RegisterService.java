@@ -79,7 +79,7 @@ public class RegisterService {
         }
 
         // 회원 휴대폰 번호 검증
-        if (checkNumber(guestRegisterRequest.userEmail())) {
+        if (checkNumber(guestRegisterRequest.userNumber())) {
             throw new RegisterException(DUPLICATE_NUMBER);
         }
 

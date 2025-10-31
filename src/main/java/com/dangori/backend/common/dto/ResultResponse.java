@@ -9,14 +9,14 @@ import lombok.Getter;
 @Builder
 public class ResultResponse<T> {
     private final String message;
-    private final Boolean resultFlag;
+    private final Boolean success;
     private final Integer statusCode;
     private final T data;
 
     public static <T> ResultResponse<T> success(T data) {
         return ResultResponse.<T>builder()
                 .message(ResponseMessage.SUCCESS.message())
-                .resultFlag(true)
+                .success(true)
                 .statusCode(ResponseMessage.SUCCESS.httpStatus().value())
                 .data(data)
                 .build();
@@ -27,13 +27,14 @@ public class ResultResponse<T> {
                 .statusCode(responseMessage.httpStatus().value())
                 .message(responseMessage.errorMessage())
                 .data(data)
+                .success(true)
                 .build();
     }
 
     public static ResultResponse<Void> success() {
         return ResultResponse.<Void>builder()
                 .message(ResponseMessage.SUCCESS.message())
-                .resultFlag(true)
+                .success(true)
                 .statusCode(ResponseMessage.SUCCESS.httpStatus().value())
                 .data(null)
                 .build();
@@ -42,7 +43,7 @@ public class ResultResponse<T> {
     public static <T> ResultResponse<T> success(String message, T data) {
         return ResultResponse.<T>builder()
                 .message(message)
-                .resultFlag(true)
+                .success(true)
                 .statusCode(ResponseMessage.SUCCESS.httpStatus().value())
                 .data(data)
                 .build();
