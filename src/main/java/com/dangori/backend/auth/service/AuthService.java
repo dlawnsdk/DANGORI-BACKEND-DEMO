@@ -4,8 +4,8 @@ import com.dangori.backend.auth.domain.OAuth2MemberClientComposite;
 import com.dangori.backend.auth.domain.OAuth2ServerType;
 import com.dangori.backend.auth.domain.RefreshToken;
 import com.dangori.backend.auth.domain.repository.RefreshTokenRepository;
-import com.dangori.backend.auth.dto.OAuth2LoginRequest;
-import com.dangori.backend.auth.dto.OAuth2LoginResponse;
+import com.dangori.backend.auth.dto.AuthLoginRequest;
+import com.dangori.backend.auth.dto.AuthLoginResponse;
 import com.dangori.backend.auth.exception.AuthException;
 import com.dangori.backend.auth.exception.AuthExceptionType;
 import com.dangori.backend.config.security.provider.JwtTokenProvider;
@@ -19,15 +19,15 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class OAuth2Service {
+public class AuthService {
     private final OAuth2MemberClientComposite clientComposite;
     private final UserInfoRepository userInfoRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public OAuth2LoginResponse login(String providerName, OAuth2LoginRequest loginRequest) {
-        OAuth2ServerType provider = OAuth2ServerType.fromName(providerName);
+    public AuthLoginResponse login(AuthLoginRequest loginRequest) {
+        OAuth2ServerType provider = OAuth2ServerType.fromName(loginRequest.getProvider());
 
         UserInfo userInfo = clientComposite.fetch(provider, loginRequest.getAccessToken());
 
@@ -51,7 +51,7 @@ public class OAuth2Service {
                         )
                 );
 
-        return new OAuth2LoginResponse(accessToken, refreshToken);
+        return new AuthLoginResponse(accessToken, refreshToken);
     }
 
     public String refresh(String refreshToken) {
